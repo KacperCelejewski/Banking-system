@@ -1,32 +1,54 @@
 #register
 #staring speech and choosing opportunity from the menu
 
-print('''Hello, dear client!
-\t if you are new just join us and sign in!(Enter: 'sign in')''')
-
-while True:
-    signing_command = input("---> ")
-     
-    if signing_command=="sign in" or signing_command == "signin" or signing_command=="Sign in":
-        print("Great,we enjoy that you stay with us! \nLets start!")
-        break
-    elif signing_command!="sign in" or signing_command != "signin" or signing_command!="Sign in":
-        print("Try again!")
-        continue
-
+menu={1:"sign in", 2:"log in", 3:"Start Menu"}
+print("Menu")
+for x in menu:
+    print (x,":",menu[x])
+menuChoice=int(input("What you wanna do?"))
 from modules import majorityCheck
-majorityCheck()
-
-
 from modules import IdCheck
-IdCheck()
+from modules import passWord as password
+from modules import passCheck
+if menuChoice==1:
+        major=majorityCheck()
+        ID=IdCheck()
+        word=password()
+elif menuChoice==2:
+     Password=passCheck(person)
+elif menuChoice==3:
+     pass
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 person={}
 surrname=input("Enter yout surrname: ")
 name=input("Enter yout name: ")
 person[name]=surrname
-person["date of birth"]= majorityCheck()
-person["ID"]=IdCheck
+person["date of birth"]= major.format('dddd Do of MMMM YYYY')
+y = str()
+for x in ID:
+    y=y+x
+person["ID"]=y
+passWord={"password":word}
+person.update(passWord)
 print(person)
 
 
