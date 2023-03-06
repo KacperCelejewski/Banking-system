@@ -1,6 +1,6 @@
 #register
 #staring speech and choosing opportunity from the menu
-
+import ast
 menu={1:"sign in", 2:"log in", 3:"Start Menu"}
 print("Menu")
 for x in menu:
@@ -23,18 +23,24 @@ elif menuChoice == 2:
     from modules import login
     from modules import id_pass_connection as connection
     from modules import id_pass_connection_check as check
-    login=login()
-    print(login[-1])
-    f=open("id_match.txt","r")
-    k=f.readlines()
+    users_input=login()
+    #Stored ID and passwoord as lsit
     
-    match={login[-1]:login[0]}
-    for i in k:
-          if i == match:
-                print("You are logged in!")
+    f=open("id_match.txt","r")
+    lines=f.readlines()
+    match={users_input[-1]:users_input[0]}
+    for i in range(len(lines)):
+        lines_stripped= lines[i].strip("\n")
+        input_from_register = ast.literal_eval(lines_stripped)
+        if input_from_register == match:
+            print("You are logged in!")
+            break
+    else:
+        print("You  cant log in")
+    
 
           
-    check=check(login[0],login[1],match)
+    check=check(users_input[0],users_input[1],match)
 
 elif menuChoice == 3:
     pass

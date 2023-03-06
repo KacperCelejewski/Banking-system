@@ -129,7 +129,6 @@ def login():
                 """Place to write some code about getting back"""
             for p in range(len(passes)):
                 if passes[p].strip() == password:
-                        print("Come in bro!")
                         break
                 elif passes[p].strip() != password:
                     for i in passes:
@@ -145,9 +144,12 @@ def id_pass_connection(ID,passw):
     conn={ID:passw}
     f=open("id_match.txt","a")
     f.write(str(conn))
+    f.write("\n")
 
 def id_pass_connection_check(ID,passw,connection):
     if type(connection) != dict:
+        print("dic")
+        exit()
         return 
     print(connection[passw])
     while connection[passw]!=ID:
