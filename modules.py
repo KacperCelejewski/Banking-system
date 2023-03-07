@@ -77,17 +77,18 @@ def majorityCheck():
     return data
 
 
-# create password
+# create passwords and saves them in file, that will be used to login function
 def passWord_reg():
     file_reg = open("RegPass.txt", "a")
     password = input("Enter your new password: ")
+    #condition that check if password is empty
     while password == "":
         if password == "":
                 print( "password has to contain letters!")
                 password= input("Enter your new password: ")
-
     confirm = input("Confirm your new password: ")
-    
+
+    #confirmed password has to be the same password
     while password != confirm:
         num = int(input("Confimation failed(incorrect password) If you wwant to change your password, enter 1: or try again and enter 2: "))
         if num == 1:
@@ -97,53 +98,48 @@ def passWord_reg():
         elif num == 2:
             confirm = input("Confirm your new password: ")
             continue
-        
-            
-        
-            
+    #storing confirmed password in file line by line      
     confirm += "\n"
     file_reg.write(confirm)
     file_reg.close()
     return password
-
+#checks validation of inputed ID and password 
 def login():
     ID=input("Enter your ID: ")
     password = input("Enter your password: ")
+    #extra codnition on entry level, searches files to find out, if any password exist
     fileID = open("ID.txt","r")
     if fileID.readable()==True:
         text=fileID.readlines()
-        for x in text:
-            oppo=[]
-            oppo.append(x)
-            x = x.strip()
-            if x == ID:
+        for file_lines in text:
+            if file_lines.strip() == ID:
                 break
-            fileID.close()
     with open("RegPass.txt", "r") as filePass:
-        passes = filePass.readlines()
+        file_passes = filePass.readlines()
         while True:
-            if len(passes) == 0:
+            if len(file_passes) == 0:
                 print("You are not registered.")
                 return passWord_reg()
                 # Menu
                 """Place to write some code about getting back"""
             filePass.close()
+            # return password and ID, to verify if they have correct matching
             return [password, ID]
+        
 
 
-def id_pass_connection(ID,passw):
-    conn={ID:passw}
+def id_pass_connection(ID,password):
+    users_data={ID:password}
     f=open("id_match.txt","a")
-    f.write(str(conn))
+    f.write(str(users_data))
     f.write("\n")
 
-def id_pass_connection_check(ID,passw,connection):
-    if type(connection) != dict:
+def id_pass_connection_check(ID,password,users_data):
+    if type(users_data) != dict:
         print("dic")
         exit()
         return 
-    print(connection[passw])
-    while connection[passw]!=ID:
+    while users_data[password]!=ID:
         print(f"ID {ID} doesnt match to your password!")
         choice =input("""1 --> Change ID
                          2 --> Change Password""")
@@ -174,16 +170,16 @@ def profiles(ID, word):
 def id_pass_check(users_input):
     f=open("id_match.txt","r")
     lines=f.readlines()
-    match={users_input[-1]:users_input[0]}
+    match={users_input[1]:users_input[0]}
     for i in range(len(lines)):
-        lines_stripped= lines[i].strip("\n")
-        input_from_register = ast.literal_eval(lines_stripped)
+        input_from_register=ast.literal_eval(lines[i].strip("\n"))
         if input_from_register == match:
             print("You are logged in!")
             return True
     else:
         print("You  cant log in")
-        return True
+        return False
+
 
 
 
