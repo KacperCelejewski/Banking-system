@@ -1,5 +1,5 @@
 import pendulum
-
+import ast
 
 def IdCheck():
     while True:
@@ -124,19 +124,10 @@ def login():
         while True:
             if len(passes) == 0:
                 print("You are not registered.")
-                return
+                return passWord_reg()
                 # Menu
                 """Place to write some code about getting back"""
-            for p in range(len(passes)):
-                if passes[p].strip() == password:
-                        break
-                elif passes[p].strip() != password:
-                    for i in passes:
-                        if i.strip() == password:
-                            break
-                elif passes[p].strip() != password:        
-                    print("Incorrect password, try again.")
-                    password = input("Enter uour password!")
+            filePass.close()
             return [password, ID]
 
 
@@ -180,8 +171,19 @@ def profiles(ID, word):
     person.update(passWord)
     print(person)
 
+def id_pass_check(users_input):
+    f=open("id_match.txt","r")
+    lines=f.readlines()
+    match={users_input[-1]:users_input[0]}
+    for i in range(len(lines)):
+        lines_stripped= lines[i].strip("\n")
+        input_from_register = ast.literal_eval(lines_stripped)
+        if input_from_register == match:
+            print("You are logged in!")
+            return True
+    else:
+        print("You  cant log in")
+        return True
 
 
 
-
- 

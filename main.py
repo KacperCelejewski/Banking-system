@@ -26,21 +26,14 @@ elif menuChoice == 2:
     users_input=login()
     #Stored ID and passwoord as lsit
     
-    f=open("id_match.txt","r")
-    lines=f.readlines()
-    match={users_input[-1]:users_input[0]}
-    for i in range(len(lines)):
-        lines_stripped= lines[i].strip("\n")
-        input_from_register = ast.literal_eval(lines_stripped)
-        if input_from_register == match:
-            print("You are logged in!")
-            break
-    else:
-        print("You  cant log in")
-    
-
-          
-    check=check(users_input[0],users_input[1],match)
+    from modules import id_pass_check
+    users_validation=id_pass_check(users_input)
+    def again():
+        next_step=input("If you want to try again enter 'yes', to sign in enter 'sign in'")
+        if users_validation==False and next_step=="yes":
+          return id_pass_check()
+        elif next_step=="sign in":
+             return  majorityCheck(),IdCheck(),passWord_reg(),connection(str(ID[-1]),word),profiles(ID, word)
 
 elif menuChoice == 3:
     pass
